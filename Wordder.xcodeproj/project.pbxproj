@@ -40,15 +40,8 @@
 		CA716B292B8DEFAB00D1BCFB /* Stepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA716B282B8DEFAB00D1BCFB /* Stepper.swift */; };
 		CA7239652B4D4473006DD44C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7239642B4D4473006DD44C /* Constants.swift */; };
 		CA84B2B12B9EEF3400765899 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = CA84B2B02B9EEF3400765899 /* SocketIO */; };
-		CA84B2B52B9EF00C00765899 /* SocketState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA84B2B32B9EF00C00765899 /* SocketState.swift */; };
-		CA84B2B62B9EF00C00765899 /* SocketEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA84B2B42B9EF00C00765899 /* SocketEvents.swift */; };
-		CA84B2BB2B9EF02B00765899 /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA84B2B72B9EF02A00765899 /* GameState.swift */; };
-		CA84B2BC2B9EF02B00765899 /* GameStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA84B2B82B9EF02A00765899 /* GameStrings.swift */; };
-		CA84B2BD2B9EF02B00765899 /* GameColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA84B2B92B9EF02A00765899 /* GameColors.swift */; };
-		CA84B2BE2B9EF02B00765899 /* GameUx.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA84B2BA2B9EF02B00765899 /* GameUx.swift */; };
 		CA8770992B85CC0B0006AB4F /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8770982B85CC0B0006AB4F /* Language.swift */; };
 		CA8E34362B4A06A00080C093 /* SubmitButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8E34352B4A06A00080C093 /* SubmitButton.swift */; };
-		CA9FDF582B9B9ABD0003CAE3 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FDF572B9B9ABD0003CAE3 /* GameManager.swift */; };
 		CAA037082B58F9F300A252E0 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA037052B58F9F300A252E0 /* Buttons.swift */; };
 		CAA037092B58F9F300A252E0 /* Texts.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA037062B58F9F300A252E0 /* Texts.swift */; };
 		CAA0370A2B58F9F300A252E0 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA037072B58F9F300A252E0 /* Images.swift */; };
@@ -112,15 +105,8 @@
 		CA66A8022B9772DE000C8604 /* splash2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = splash2.mp3; sourceTree = "<group>"; };
 		CA716B282B8DEFAB00D1BCFB /* Stepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stepper.swift; sourceTree = "<group>"; };
 		CA7239642B4D4473006DD44C /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		CA84B2B32B9EF00C00765899 /* SocketState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketState.swift; sourceTree = "<group>"; };
-		CA84B2B42B9EF00C00765899 /* SocketEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketEvents.swift; sourceTree = "<group>"; };
-		CA84B2B72B9EF02A00765899 /* GameState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
-		CA84B2B82B9EF02A00765899 /* GameStrings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameStrings.swift; sourceTree = "<group>"; };
-		CA84B2B92B9EF02A00765899 /* GameColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameColors.swift; sourceTree = "<group>"; };
-		CA84B2BA2B9EF02B00765899 /* GameUx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameUx.swift; sourceTree = "<group>"; };
 		CA8770982B85CC0B0006AB4F /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		CA8E34352B4A06A00080C093 /* SubmitButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitButton.swift; sourceTree = "<group>"; };
-		CA9FDF572B9B9ABD0003CAE3 /* GameManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 		CAA037052B58F9F300A252E0 /* Buttons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		CAA037062B58F9F300A252E0 /* Texts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Texts.swift; sourceTree = "<group>"; };
 		CAA037072B58F9F300A252E0 /* Images.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
@@ -182,8 +168,6 @@
 		8856939A2B45F5C8005A0245 /* Wordder */ = {
 			isa = PBXGroup;
 			children = (
-				CA84B2B22B9EF00C00765899 /* Socket */,
-				CA9FDF562B9B4C150003CAE3 /* Game */,
 				CA66A7F92B96FCF7000C8604 /* Sounds */,
 				CAAEB2062B4C082200C5A332 /* Extension */,
 				CAA037042B58F9F300A252E0 /* Enum */,
@@ -272,27 +256,6 @@
 				CA7239642B4D4473006DD44C /* Constants.swift */,
 			);
 			path = Constants;
-			sourceTree = "<group>";
-		};
-		CA84B2B22B9EF00C00765899 /* Socket */ = {
-			isa = PBXGroup;
-			children = (
-				CA84B2B32B9EF00C00765899 /* SocketState.swift */,
-				CA84B2B42B9EF00C00765899 /* SocketEvents.swift */,
-			);
-			path = Socket;
-			sourceTree = "<group>";
-		};
-		CA9FDF562B9B4C150003CAE3 /* Game */ = {
-			isa = PBXGroup;
-			children = (
-				CA84B2B92B9EF02A00765899 /* GameColors.swift */,
-				CA84B2B72B9EF02A00765899 /* GameState.swift */,
-				CA84B2B82B9EF02A00765899 /* GameStrings.swift */,
-				CA84B2BA2B9EF02B00765899 /* GameUx.swift */,
-				CA9FDF572B9B9ABD0003CAE3 /* GameManager.swift */,
-			);
-			path = Game;
 			sourceTree = "<group>";
 		};
 		CAA037042B58F9F300A252E0 /* Enum */ = {
@@ -473,20 +436,16 @@
 				CAAEB2032B4C06CD00C5A332 /* NetworkError.swift in Sources */,
 				CAAEB1FF2B4C06CD00C5A332 /* Request.swift in Sources */,
 				CA8770992B85CC0B0006AB4F /* Language.swift in Sources */,
-				CA84B2BC2B9EF02B00765899 /* GameStrings.swift in Sources */,
 				CAF213E82B5538C300D46EFB /* SuccessSheet.swift in Sources */,
 				CAF213E62B55347300D46EFB /* FailSheet.swift in Sources */,
 				CA65F1B62B49EA2000008919 /* KeyboardButton.swift in Sources */,
 				CAAEB20A2B4C089A00C5A332 /* KeychainManager.swift in Sources */,
 				CA16E9E22B57F28700772906 /* WordData.xcdatamodeld in Sources */,
-				CA9FDF582B9B9ABD0003CAE3 /* GameManager.swift in Sources */,
 				CAAEB1FC2B4C06CD00C5A332 /* Log.swift in Sources */,
-				CA84B2B52B9EF00C00765899 /* SocketState.swift in Sources */,
 				CAA0371C2B58FC2000A252E0 /* OnboardingModel.swift in Sources */,
 				CA2239232B90A9F200B5587D /* TapToStart.swift in Sources */,
 				CAAEB1FE2B4C06CD00C5A332 /* HTTPMethod.swift in Sources */,
 				CAA037082B58F9F300A252E0 /* Buttons.swift in Sources */,
-				CA84B2BE2B9EF02B00765899 /* GameUx.swift in Sources */,
 				CAAEB1FD2B4C06CD00C5A332 /* APIClient.swift in Sources */,
 				CAAEB2042B4C06CD00C5A332 /* NetworkDispatcher.swift in Sources */,
 				CAA037172B58FAA400A252E0 /* Signup.swift in Sources */,
@@ -511,16 +470,13 @@
 				CAA0370A2B58F9F300A252E0 /* Images.swift in Sources */,
 				CA3032AF2B56AB5A00E16B92 /* Counter.swift in Sources */,
 				CACEDCA42B4F325500CA5EF9 /* WordsModel.swift in Sources */,
-				CA84B2BB2B9EF02B00765899 /* GameState.swift in Sources */,
 				CA7239652B4D4473006DD44C /* Constants.swift in Sources */,
 				8856939C2B45F5C8005A0245 /* WordderApp.swift in Sources */,
-				CA84B2B62B9EF00C00765899 /* SocketEvents.swift in Sources */,
 				CAA0371A2B58FAAC00A252E0 /* Splash.swift in Sources */,
 				887B23092B47378E0039C832 /* SquareItem.swift in Sources */,
 				CAA0370F2B58FA6900A252E0 /* OnboardingItem.swift in Sources */,
 				CAA037092B58F9F300A252E0 /* Texts.swift in Sources */,
 				CA2239252B90B94100B5587D /* BottomMenu.swift in Sources */,
-				CA84B2BD2B9EF02B00765899 /* GameColors.swift in Sources */,
 				CA16E9E42B57F8EF00772906 /* Persistence.swift in Sources */,
 				CAA037152B58FAA400A252E0 /* Authentication.swift in Sources */,
 			);
