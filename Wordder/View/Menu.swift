@@ -12,9 +12,7 @@ import Combine
 struct Menu: View {
     @ObservedObject var viewModel: EnglishViewModel = EnglishViewModel()
     @State private var wordLength: Int = 4
-    @State private var isTabToStart: Bool = false
-    @State private var timeIsOver = false
-    @State private var isWordCorrect = false
+    @State private var gameState: GameStates = .idle
     @State private var buttonIsActive = false
     @State private var wordGuess: String = ""
     @State private var writingIndex: Int = -1
@@ -25,39 +23,34 @@ struct Menu: View {
     var body: some View {
         NavigationStack {
             ZStack {
-            
                 LinearGradient(
                     gradient: Gradient(colors: [
-                        Color(red: 28/255, green: 40/255, blue: 89/255),   // Orta koyu mavi
-                        Color(red: 71/255, green: 53/255, blue: 133/255)   // Açık mor
+                        Color(red: 28/255, green: 40/255, blue: 89/255),
+                        Color(red: 71/255, green: 53/255, blue: 133/255)
                     ]),
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 )
                 .ignoresSafeArea()
-                
-                
-                
+
                 VStack {
                     // Header
                     HStack {
                         Button(action: {
                             Audio.playSound("buttonClick3")
-                            GotoMenuClear()
+                            gotoMenuClear()
                         }) {
-                            
-                            if !isTabToStart {
+                            if gameState == .idle {
                                 Image(systemName: "info.circle")
                                     .font(.system(size: 30, weight: .medium))
                                     .foregroundColor(.white)
                                     .padding()
-                            }else{
+                            } else {
                                 Image("home")
                                     .font(.system(size: 30, weight: .medium))
                                     .foregroundColor(.white)
                                     .padding()
                             }
-                
                         }
 
                         Spacer()
@@ -71,20 +64,18 @@ struct Menu: View {
                                 .frame(width: 10, height: 30)
                         }
                         .padding()
-                        
                     }
                     .padding(.top, 40)
 
                     Spacer()
 
-                    // Game start / Game screen
-                    if !isTabToStart {
+                    if gameState == .idle {
                         VStack {
                             Button(action: {
                                 Audio.playSound("buttonClick3")
                                 viewModel.getEnglishWordsJson(wordLength: wordLength)
-                                StartTimer()
-                                isTabToStart = true
+                                startTimer()
+                                gameState = .playing
                             }) {
                                 TapToStart()
                             }
@@ -93,26 +84,33 @@ struct Menu: View {
                                 .padding(.bottom, 30)
                         }
                     } else {
-                        // Timer & Progress
                         HStack {
                             Counter(timeRemaning: $viewModel.timeRemaning, progress: $viewModel.progress)
                                 .onReceive(viewModel.everySecTimer) { _ in
                                     viewModel.timeRemaning -= 1
                                     viewModel.progress = Float(1 - (viewModel.timeRemaning / 20.0))
+                                    if viewModel.timeRemaning <= 0 {
+                                        gameState = .fail
+                                    }
                                 }
-                                .sheet(isPresented: $timeIsOver) {
+                                .sheet(isPresented: Binding(get: { gameState == .fail }, set: { _ in })) {
                                     FailSheet()
                                         .onAppear {
-                                            Audio.playSound("unSuccess")
-                                            gotoMenu(time: 3)
+                                            
+                                            withAnimation(.easeInOut(duration: 0.2)) {
+                                                Audio.playSound("unSuccess")
+                                            }
+                                            
+                                            gotoMenu(after: 3)
                                         }
+                                    
+                                    
                                 }
                         }
                         .padding(.horizontal, 64)
 
                         Spacer()
 
-                        // Word Squares
                         if let characterList = viewModel.characterList {
                             VStack {
                                 HStack(spacing: 8) {
@@ -121,21 +119,20 @@ struct Menu: View {
                                     }
                                 }
                                 .onReceive(squareTimer) { _ in
-                                    GenerateRandomCharacter()
+                                    generateRandomCharacter()
                                 }
                             }
                         }
 
                         Spacer()
 
-                        // Keyboard
                         VStack {
                             ForEach(Constants.englishButtons, id: \.self) { row in
                                 HStack {
                                     ForEach(row, id: \.self) { button in
                                         Button(action: {
                                             Audio.playSound("keyboard")
-                                            button == "DELETE" ? Delete() : Add(key: button)
+                                            button == "DELETE" ? delete() : add(key: button)
                                         }) {
                                             KeyboardButton(key: button)
                                         }
@@ -145,16 +142,18 @@ struct Menu: View {
 
                             Button(action: {
                                 Audio.playSound("space")
-                                Submit()
+                                submit()
                             }) {
                                 SubmitButton(key: "ENTER", backgroundColor: .cyan, letterColor: .black)
                             }
                             .disabled(!buttonIsActive)
-                            .sheet(isPresented: $isWordCorrect) {
+                            .sheet(isPresented: Binding(get: { gameState == .success }, set: { _ in })) {
                                 SuccessSheet()
                                     .onAppear {
-                                        Audio.playSound("success")
-                                        gotoMenu(time: 3)
+                                        withAnimation(.easeInOut(duration: 0.2)) {
+                                            Audio.playSound("success")
+                                        }
+                                        gotoMenu(after: 3)
                                     }
                             }
                         }
@@ -167,26 +166,25 @@ struct Menu: View {
         .navigationBarBackButtonHidden(true)
     }
 
-    // MARK: - Functions
+    // MARK: - Game Logic
 
-    func gotoMenu(time: Double) {
+    func gotoMenu(after time: Double) {
         DispatchQueue.main.asyncAfter(deadline: .now() + time) {
-            GotoMenuClear()
+            gotoMenuClear()
         }
     }
 
-    func GenerateRandomCharacter() {
-        guard viewModel.timeRemaning > 0,
+    func generateRandomCharacter() {
+        guard gameState == .playing,
               let word = viewModel.word,
               let characterList = viewModel.characterList else {
-            PaintAllSquare(.red, writeCorrectWord: true)
-            timeIsOver = true
-            StopTimer()
+            paintAllSquares(.red, revealCorrectWord: true)
+            gameState = .fail
+            stopTimer()
             return
         }
 
-        Clear()
-
+        clear()
         let randomChar = String(word.randomElement()!)
         randomIndex = Int.random(in: 0..<characterList.count)
         viewModel.characterList?[randomIndex].guessCharacter = randomChar
@@ -194,36 +192,33 @@ struct Menu: View {
             randomChar == characterList[randomIndex].character ? .green : .yellow
     }
 
-    func Submit() {
+    func submit() {
         guard let characterList = viewModel.characterList else { return }
-
         wordGuess = characterList.map { $0.guessCharacter }.joined()
 
         if viewModel.word == wordGuess {
-            isWordCorrect = true
-            PaintAllSquare(.green, writeCorrectWord: false)
+            gameState = .success
+            paintAllSquares(.green, revealCorrectWord: false)
         } else {
-            PaintAllSquare(.red, writeCorrectWord: false)
+            paintAllSquares(.red, revealCorrectWord: false)
         }
     }
 
-    func GotoMenuClear() {
-        timeIsOver = false
-        isWordCorrect = false
-        StopTimer()
+    func gotoMenuClear() {
+        gameState = .idle
+        stopTimer()
         viewModel.timeRemaning = 20
         viewModel.progress = 0
-        isTabToStart = false
         writingIndex = -1
     }
 
-    func Clear() {
+    func clear() {
         guard viewModel.characterList?.indices.contains(randomIndex) == true else { return }
         viewModel.characterList?[randomIndex].guessCharacter = ""
         viewModel.characterList?[randomIndex].backgroundColor = .white
     }
 
-    func Delete() {
+    func delete() {
         guard writingIndex >= 0,
               viewModel.characterList?.indices.contains(writingIndex) == true,
               viewModel.characterList?[writingIndex].guessCharacter != "" else { return }
@@ -232,29 +227,28 @@ struct Menu: View {
         viewModel.characterList?[writingIndex].backgroundColor = .white
 
         if writingIndex == 0 {
-            StartTimer()
+            startTimer()
         }
 
         writingIndex -= 1
         buttonIsActive = false
-        PaintAllSquare(.white, writeCorrectWord: false)
+        paintAllSquares(.white, revealCorrectWord: false)
     }
 
-    func Add(key: String) {
+    func add(key: String) {
         guard let characterList = viewModel.characterList,
               writingIndex < characterList.count - 1 else { return }
 
         writingIndex += 1
         if writingIndex == 0 {
-            Clear()
-            StopTimer()
+            clear()
+            stopTimer()
         }
         viewModel.characterList?[writingIndex].guessCharacter = key
-
-        IsSubmitButtonActive()
+        updateSubmitButtonState()
     }
 
-    func IsSubmitButtonActive() {
+    func updateSubmitButtonState() {
         guard let characterList = viewModel.characterList else {
             buttonIsActive = false
             return
@@ -262,28 +256,31 @@ struct Menu: View {
         buttonIsActive = (writingIndex + 1 == characterList.count)
     }
 
-    func StartTimer() {
+    func startTimer() {
         squareTimer = Timer.publish(every: 1.5, on: .main, in: .common)
         squareTimerCancellable = squareTimer.connect()
         viewModel.startTimer()
     }
 
-    func StopTimer() {
+    func stopTimer() {
         squareTimerCancellable?.cancel()
         squareTimerCancellable = nil
         viewModel.stopTimer()
     }
 
-    func PaintAllSquare(_ color: Color, writeCorrectWord: Bool) {
+    func paintAllSquares(_ color: Color, revealCorrectWord: Bool) {
         guard let characterList = viewModel.characterList else { return }
-
         for i in 0..<characterList.count {
             viewModel.characterList?[i].backgroundColor = color
-            if writeCorrectWord {
+            if revealCorrectWord {
                 viewModel.characterList?[i].guessCharacter = characterList[i].character
             }
         }
     }
+}
+
+enum GameStates {
+    case idle, playing, success, fail
 }
 
 struct Menu_Previews: PreviewProvider {
